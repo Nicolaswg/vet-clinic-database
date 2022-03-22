@@ -13,8 +13,12 @@ SELECT
 FROM
   animals
 WHERE
-  date_of_birth BETWEEN '2016-01-01'
-  AND '2019-01-01';
+  EXTRACT(
+    year
+    FROM
+      data_of_birth
+  ) BETWEEN 2016
+  AND 2019;
 
 /* Select elements that have less than 3 escape attempst and neutered is true */
 SELECT
@@ -68,4 +72,3 @@ FROM
 WHERE
   weight_kg >= 10.4
   AND weight_kg <= 17.3;
-  
