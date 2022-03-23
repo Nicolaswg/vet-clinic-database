@@ -162,7 +162,6 @@ WHERE
 COMMIT;
 
 /* TRANSACTION-5 aswering questions with queries */
-
 /*question-1*/
 SELECT
   COUNT(*)
