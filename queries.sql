@@ -162,11 +162,14 @@ WHERE
 COMMIT;
 
 /* TRANSACTION-5 aswering questions with queries */
+
+/*question-1*/
 SELECT
   COUNT(*)
 FROM
   animals;
 
+/*question-2*/
 SELECT
   COUNT (*)
 FROM
@@ -174,11 +177,13 @@ FROM
 WHERE
   escape_attempts = 0;
 
+/*question-3*/
 SELECT
   AVG(weight_kg)
 FROM
   animals;
 
+/*question-4*/
 SELECT
   neutered,
   COUNT(escape_attempts) AS escape_attempts
@@ -187,6 +192,7 @@ FROM
 GROUP BY
   neutered;
 
+/*question-5*/
 SELECT
   species,
   MAX(weight_kg) AS max_weigth_by_species,
@@ -196,6 +202,7 @@ FROM
 GROUP BY
   species;
 
+/*question-6*/
 SELECT
   species,
   AVG(escape_attempts) AS escape_attempts_average_by_species
