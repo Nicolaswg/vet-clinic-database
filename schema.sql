@@ -2,8 +2,9 @@
 CREATE TABLE animals (
   id BIGSERIAL NOT NULL PRIMARY KEY,
   name VARCHAR(100),
-  data_of_birth DATE,
+  date_of_birth DATE,
   escape_attempts INTEGER,
   neutered BOOLEAN,
-  weight_kg DECIMAL
+  weight_kg DECIMAL,
+  species VARCHAR
 );
