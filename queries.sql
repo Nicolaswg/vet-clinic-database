@@ -16,7 +16,7 @@ WHERE
   EXTRACT(
     year
     FROM
-      data_of_birth
+      date_of_birth
   ) BETWEEN 2016
   AND 2019;
 
@@ -72,3 +72,141 @@ FROM
 WHERE
   weight_kg >= 10.4
   AND weight_kg <= 17.3;
+
+/*TRANSACTIONS-1 set species to unspecified */
+BEGIN WORK;
+
+UPDATE
+  animals
+SET
+  species = 'unspecified';
+
+SELECT
+  *
+FROM
+  animals;
+
+ROLLBACK WORK;
+
+SELECT
+  *
+FROM
+  animals;
+
+/* TRANSACTIONS-2 set species to correct values*/
+BEGIN WORK;
+
+UPDATE
+  animals
+SET
+  species = 'digimon'
+WHERE
+  name LIKE '%mon%';
+
+UPDATE
+  animals
+SET
+  species = 'pokemon'
+WHERE
+  species IS NULL;
+
+COMMIT;
+
+SELECT
+  *
+FROM
+  animals;
+
+/* TRANSACTIONS-3 deleted all records */
+BEGIN WORK;
+
+DELETE FROM
+  animals;
+
+ROLLBACK WORK;
+
+SELECT
+  *
+FROM
+  animals;
+
+/* TRANSACTION-4 multiples control Commands */
+BEGIN WORK;
+
+DELETE FROM
+  animals
+WHERE
+  date_of_birth > '2022-01-01';
+
+SELECT
+  *
+FROM
+  animals;
+
+SAVEPOINT SP_DELETE_1;
+
+UPDATE
+  animals
+SET
+  weight_kg = weight_kg * -1;
+
+ROLLBACK TO SP_DELETE_1;
+
+UPDATE
+  animals
+SET
+  weight_kg = weight_kg * -1
+WHERE
+  weight_kg < 0;
+
+COMMIT;
+
+/* TRANSACTION-5 aswering questions with queries */
+SELECT
+  COUNT(*)
+FROM
+  animals;
+
+SELECT
+  COUNT (*)
+FROM
+  animals
+WHERE
+  escape_attempts = 0;
+
+SELECT
+  AVG(weight_kg)
+FROM
+  animals;
+
+SELECT
+  neutered,
+  COUNT(escape_attempts) AS escape_attempts
+FROM
+  animals
+GROUP BY
+  neutered;
+
+SELECT
+  species,
+  MAX(weight_kg) AS max_weigth_by_species,
+  MIN(weight_kg) as min_weigth_by_species
+FROM
+  animals
+GROUP BY
+  species;
+
+SELECT
+  species,
+  AVG(escape_attempts) AS escape_attempts_average_by_species
+FROM
+  animals
+WHERE
+  EXTRACT(
+    year
+    FROM
+      date_of_birth
+  ) BETWEEN 1990
+  AND 2000
+GROUP BY
+  species;
