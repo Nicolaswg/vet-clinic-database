@@ -66,7 +66,7 @@ WHERE
 COMMIT;
 
 /* owner_id data */
-BEGIN WORK
+BEGIN WORK;
 UPDATE
   animals
 SET
