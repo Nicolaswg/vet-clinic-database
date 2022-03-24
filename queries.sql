@@ -117,6 +117,7 @@ SELECT
 FROM
   animals;
 
+/* MILESTONE--2 */
 /* TRANSACTIONS-3 deleted all records */
 BEGIN WORK;
 
@@ -161,7 +162,7 @@ WHERE
 
 COMMIT;
 
-/* TRANSACTION-5 aswering questions with queries */
+/* Aswering questions with queries */
 /*question-1*/
 SELECT
   COUNT(*)
@@ -216,3 +217,82 @@ WHERE
   AND 2000
 GROUP BY
   species;
+
+/* MILESTONE--3 */
+/*Aswering queries questions using JOIN */
+/* Question-1 */
+SELECT
+  name AS Animal,
+  full_name AS Owner
+FROM
+  owners O
+  JOIN animals A ON O.id = A.owner_id
+WHERE
+  O.full_name = 'Melody Pond';
+
+/* Question-2 */
+SELECT
+  A.name,
+  S.name as species
+FROM
+  species S
+  JOIN animals A ON S.id = A.species_id
+WHERE
+  S.name = 'Pokemon';
+
+/* Question-3 */
+SELECT
+  full_name AS Owner,
+  name AS Animals
+FROM
+  animals A
+  RIGHT JOIN owners on A.owner_id = owners.id;
+
+/* Question-4 */
+SELECT
+  COUNT(A.name),
+  S.name AS Species
+FROM
+  species S
+  JOIN animals A ON S.id = A.species_id
+GROUP BY
+  S.name;
+
+/* Question-5 */
+SELECT
+  A.name AS Animal,
+  full_name AS Owner,
+  S.name as Species
+FROM
+  animals A
+  JOIN owners O ON A.owner_id = O.id
+  JOIN sp ecies S ON A.species_id = S.id
+WHERE
+  S.name = 'Digimon'
+  AND full_name = 'Jennifer Orwell';
+
+/* Question-6 */
+SELECT
+  A.name AS Animals,
+  full_name AS Owner,
+  escape_attempts
+FROM
+  animals A
+  JOIN owners O ON A.owner_id = O.id
+WHERE
+  esc ape_attempts = 0
+  AND full_name = 'Dean Winchester';
+
+/* Question-7 */
+SELECT
+  COUNT(*),
+  full_name AS Owner
+FROM
+  animals A
+  JOIN owners O ON A.owner_id = O.id
+GROUP BY
+  Owner
+ORDER BY
+  COUNT(*) DE SC
+LIMIT
+  1
