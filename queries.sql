@@ -295,4 +295,156 @@ GROUP BY
 ORDER BY
   COUNT(*) DE SC
 LIMIT
-  1
+  1;
+
+/* MILESTONE--4 */
+/* SQL tables relationships queries */
+/* QUESTION-1 */
+SELECT
+  A.name as Animal,
+  Ve.name as Vet,
+  Vi.visit_date
+FROM
+  visits as Vi
+  JOIN animals A ON Vi.animal_id = A.id
+  JOIN vets Ve ON Vi.vet_id = Ve.id
+WHERE
+  Ve.name = 'William Thatcher'
+ORDER BY
+  Vi.visit_date DESC
+LIMIT
+  1;
+
+/* QUESTION-2 */
+SELECT
+  COUNT(DISTINCT A.name)
+FROM
+  visits Vi
+  JOIN animals A ON Vi.animal_id = A.id
+  JOIN vets Ve ON Vi.vet_id = Ve.id
+WHERE
+  Ve.name = 'Stephanie Mendez';
+
+/* QUESTION-3 */
+SELECT
+  Ve.name AS Vets,
+  S.name AS Speciality
+FROM
+  vets Ve
+  LEFT JOIN specializations Spe ON Ve.id = Spe.vet_id
+  LEFT JOIN species S ON S.id = Spe.species_id;
+
+/* QUESTION-4 */
+SELECT
+  A.name AS Animals,
+  Vi.visit_date AS Date,
+  Ve.name as Vet
+FROM
+  animals A
+  JOIN visits Vi ON Vi.animal_id = A.id
+  JOIN vets Ve ON Vi.vet_id = Ve.id
+WHERE
+  Ve.name = 'Stephanie Mendez'
+  AND Vi.visit_date BETWEEN '2020-04-01'
+  AND '2020-08-30';
+
+/* QUESTION-5 */
+SELECT
+  A.name AS Animals,
+  COUNT(A.name) AS Most_Viewed
+FROM
+  animals A
+  JOIN visits Vi ON Vi.animal_id = A.id JO IN vets Ve ON Vi.vet_id = Ve.id
+GROUP BY
+  A.name
+ORDER BY
+  Most_Viewed DESC
+LIMIT
+  1;
+
+/* QUESTION-6 */
+SELECT
+  Ve.name AS Vest,
+  A.name AS Animal,
+  visit_date AS Date
+FROM
+  visits Vi
+  JOIN vets Ve ON Vi.vet_id = Ve.id
+  JOIN animals A ON Vi.animal_id = A.id
+WHERE
+  Ve.name = 'Maisy Smith'
+ORDER BY
+  Date
+LIMIT
+  1;
+
+/* QUESTION-7 */
+SELECT
+  A.name AS Animals,
+  A.date_of_birth AS "Date of Birth",
+  A.escape_attempts AS Escapes,
+  A.neutered AS Neutered,
+  A.weight_kg AS Weigth,
+  S.name AS species,
+  Ve.name AS "Vet name",
+  Ve.age AS "Vet age",
+  Ve.date_of_graduation AS "Date of vet graduation",
+  visit_date
+FROM
+  visits Vi
+  JOIN vets Ve ON Vi.vet_id = Ve.id
+  JOIN animals A ON Vi.animal_id = A.id
+  JOIN species S ON A.species_id = S.id
+ORDER BY
+  visit_date DESC
+LIMIT
+  1;
+
+/* QUESTION-8 */
+SELECT
+  vet_specs.species_name,
+  vet_specs.name,
+  animals.name as "Animal Name"
+FROM
+  visits
+  JOIN (
+    SELECT
+      vets.name,
+      vets.id as vet_id,
+      species.name as species_name,
+      species.id as species_id
+    FROM
+      specializations
+      JOIN vets on specializations.vet_id = vets.id
+      JOIN species on specializations.species_id = species.id
+  ) as vet_specs on visits.vet_id = vet_specs.vet_id
+  JOIN animals on visits.animal_id = animals.id
+WHERE
+  animals.species_id != vet_specs.species_id
+  AND vet_specs.name != 'Stephanie Mendez';
+
+/* QUESTION-9 */
+SELECT
+  specs.species_name,
+  COUNT(specs.species_name)
+FROM
+  visits
+  JOIN (
+    SELECT
+      animals.name,
+      animals.id as animal_id,
+      species.name as species_name,
+      species.id as species_id
+    FROM
+      animals
+      JOIN species on animals.species_id = species.id
+  ) as specs on visits.animal_id = specs.animal_id
+  JOIN vets on visits.vet_id = vets.id
+WHERE
+  vets.name = 'Maisy Smith'
+GROUP BY
+  specs.species_name
+ORDER BY
+  COUNT(specs.species_name) desc
+LIMIT
+  1;
