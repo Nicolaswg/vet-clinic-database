@@ -39,10 +39,7 @@ VALUES
   ('Pokemon'),
   ('Digimon');
 
-
-
 /* MILESTONE--3 */
-
 /* Add corresponding data to species_id and owner_id column */
 BEGIN WORK;
 
@@ -67,6 +64,7 @@ COMMIT;
 
 /* owner_id data */
 BEGIN WORK;
+
 UPDATE
   animals
 SET
@@ -113,3 +111,46 @@ WHERE
 SAVEPOINT SP5;
 
 COMMIT;
+
+/* MILESTONE--4 */
+/* SQL tables relationships */
+/* Insert data into vets--specialities--visits tables */
+INSERT INTO
+  vets(name, age, data_of_gradutation)
+VALUES
+  ('William Thatcher', 45, '2000-04-23'),
+  ('Maisy Smith', 26, '2019-01-14'),
+  ('Stephanie Mendez', 64, '1981-05-04'),
+  ('Jack Harkness', 38, '2008-06-08');
+
+INSERT INTO
+  specializations
+VALUES
+  (1, 1),
+  (3, 1),
+  (3, 2),
+  (4, 2);
+
+INSERT INTO
+  visits
+VALUES
+  (12, 1, '2020-05-24'),
+  (12, 3, '2020-07-22'),
+  (2, 4, '2021-02-02'),
+  (3, 2, '2020-01-05'),
+  (3, 2, '2020-03-08'),
+  (3, 2, '2020-05-14'),
+  (4, 3, '2021-05-04'),
+  (5, 4, '2021-02-24'),
+  (6, 2, '2019-12-21'),
+  (6, 1, '2020-08-10'),
+  (6, 2, '2021-04-07'),
+  (7, 3, '2019-09-29'),
+  (8, 4, '2020-10-03'),
+  (8, 4, '2020-11-04'),
+  (9, 2, '2019-01-24'),
+  (9, 2, '2019-05-15'),
+  (9, 2, '2020-02-27'),
+  (9, 2, '2020-08-03'),
+  (10, 3, '2020-05-24'),
+  (10, 1, '2021-01-11');
